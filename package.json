@@ -1,0 +1,10 @@
+{
+  "name": "hss-app-notification",
+  "version": "0.0.1",
+  "description": "hss app notifications",
+  "dependencies": {
+    "express": "^4.15.2",
+    "ioredis": "^3.1.2",
+    "socket.io": "^2.0.3"
+  }
+}
