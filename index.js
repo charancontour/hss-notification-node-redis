@@ -3,13 +3,22 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var Redis = require('ioredis');
 var redis = new Redis();
-redis.subscribe('notifications');
+redis.subscribe('notifications','project');
 
 redis.on('message',function(channel,message){
-    // console.log(message);
     message = JSON.parse(message);
-    io.emit(channel+'-'+message.user_id,message);
+    if(channel == 'notifications'){
+      io.emit(channel+'-'+message.user_id,message);
+    }else if(channel == 'project') {
+      // for (var i = 0; i < message.users.length; i++) {
+      //   io.emit(channel+'-'+message.event+'-'+message.users[i].id,message.data);
+      // }
+      io.emit(channel+'-'+message.event,message.data);
+    }
+
+    // io.emit(channel+'-'+message.user_id,message);
 });
+
 
 app.get('/', function(req, res){
 res.sendFile(__dirname + '/index.html');

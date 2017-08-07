@@ -15,3 +15,7 @@ user disconnected
 a user connected
 user disconnected
 a user connected
+[33m[nodemon] 1.11.0[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching: *.*[39m
+[32m[nodemon] starting `node index.js`[39m
