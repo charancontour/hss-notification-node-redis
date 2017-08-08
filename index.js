@@ -5,15 +5,15 @@ var Redis = require('ioredis');
 var redis = new Redis();
 redis.subscribe('notifications','project');
 
-redis.on('message',function(channel,message){
+redis.on('message',function(channel,message){    
     message = JSON.parse(message);
     if(channel == 'notifications'){
       io.emit(channel+'-'+message.user_id,message);
     }else if(channel == 'project') {
-      // for (var i = 0; i < message.users.length; i++) {
-      //   io.emit(channel+'-'+message.event+'-'+message.users[i].id,message.data);
-      // }
-      io.emit(channel+'-'+message.event,message.data);
+      for (var i = 0; i < message.data.users.length; i++) {
+        io.emit(channel+'-'+message.event+'-'+message.data.users[i].id,message.data.data);
+      }
+      // io.emit(channel+'-'+message.event,message.data);
     }
 
     // io.emit(channel+'-'+message.user_id,message);
