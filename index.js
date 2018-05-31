@@ -1,6 +1,17 @@
 var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var https = require('https');
+var fs = require('fs');
+
+
+var options = {
+  key: fs.readFileSync('./file.pem'),
+  cert: fs.readFileSync('./file.crt')
+};
+
+var server = https.createServer(options, app);
+
+var io = require('socket.io')(server);
+
 var Redis = require('ioredis');
 var redis = new Redis();
 redis.subscribe('notifications','project','case_project');
@@ -42,6 +53,6 @@ io.on('connection', function(socket){
 
 });
 
-http.listen(3000, function(){
-  // console.log('listening on *:3000');
+server.listen(3000, function(){
+  console.log('listening on *:433');
 });
